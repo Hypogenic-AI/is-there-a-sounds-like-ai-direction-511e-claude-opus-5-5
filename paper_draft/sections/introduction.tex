@@ -1,0 +1,25 @@
+\section{Introduction}
+\label{sec:intro}
+
+Text written by chat models has a recognisable feel. Readers notice it, and detectors catch it with near-perfect accuracy. Recent work shows that this signal is also visible \emph{inside} language models: a linear probe on mid-layer activations separates human from machine text better than 16 dedicated detectors~\citep{quaremba2026linear}, and per-layer human-\versus-AI steering vectors make strong detectors on their own~\citep{vishnyakov2026svdetect,liang2026steer}.
+These results raise a simple question. {\bf Is there a ``sounds like AI'' direction that the model uses when it writes?}
+
+The answer matters in three places. For detection, a single steerable direction would be a one-vector ``humanizer'' and would reveal whether detectors rely on one internal feature. For interpretability, it tells us whether ``sounding like AI'' is a distinct concept or a relabelling of formality, verbosity, domain, or the Assistant persona~\citep{lu2026assistant}. For post-training, it tells us whether chat tuning creates this signature or only amplifies one that pretraining already produced.
+
+Prior work leaves these questions open. Detection papers only \emph{read} the direction; none steers generation with it~\citep{quaremba2026linear,vishnyakov2026svdetect,liang2026steer}. \citet{kuznetsov2025feature} steer sparse-autoencoder features of AI text but evaluate the outputs only qualitatively. Interpretation analyses repeatedly suggest the direction is ``formal \versus casual''~\citep{vishnyakov2026svdetect,liang2026steer}, but no one has tested this against controlled confound directions. Finally, the steering literature warns that steering often breaks fluency, is weaker on instruct models, and is often beaten by prompting~\citep{wu2025axbench,steerweak2026}. A positive result therefore needs careful controls.
+
+We run that controlled test on \qwen and its base model \qwenbase. We fit \dai as the difference of means between AI and human texts that share the same prefix or question (\hape and \hcthree). We then add $\alpha\,\|\bar\vh\|\,\hat\vd$ to the residual stream during generation and score 9,000 answers to 150 held-out questions. Scoring uses two supervised detectors (\desklib, \fakespot), the zero-shot \binoculars score, and LLM judges. We control for coherence and content with judge fluency and relevance, perplexity, and embedding similarity to the unsteered answer. As baselines we use three equal-norm random directions; formality, verbosity, and Assistant-axis directions; \dai with six confounds projected out; and a ``write like a human'' system prompt.
+
+\para{Preview of results.} Steering away from AI at block 20 lowers \desklib \pai from 0.996 to 0.84 and \fakespot from 0.994 to 0.85, and raises \binoculars from 0.70 to 0.83. Random directions of the same norm do nothing to the supervised detectors (paired difference in \desklib $-0.154$, 95\% CI $[-0.20,-0.11]$). Among outputs that a judge rated perfectly fluent and on-topic, \dai reaches 0.85 (0.67 at block 16). Random directions stay at 0.99--1.00, formality at 0.98, and the prompt at 1.00.
+\dai is nearly orthogonal to the Assistant axis (whitened cosine 0.005). It nearly coincides with a Llama-3 instruct-minus-base direction (raw cosine 0.90), and it transfers to chat generators (AUROC 0.78--0.90) but not to base LMs (0.58). It exists with the same orientation in the base model (cosine 0.99) and steers it in both directions.
+The lever is weak, though. Human answers to the same questions score 0.35, and pushing harder breaks coherence first. A blind LLM judge also sees \dai lower AI-likelihood, but it rates formality steering and prompting as equally effective.
+
+\para{Contributions.}
+\begin{itemize}[leftmargin=*,itemsep=0pt,topsep=0pt]
+    \item We conduct the first controlled causal test of a human-\versus-AI residual direction in generation. We score outputs with independent supervised, zero-shot, and LLM-judge measures, and compare against random, confound, and prompting baselines at matched coherence.
+    \item We disentangle the direction from formality, fluency, word length, domain, verbosity, and the Assistant axis. We show that a confound-orthogonalised version still steers, and we identify it as a chat-tuning style direction rather than a general ``machine text'' direction.
+    \item We compare base and instruct models and show that the direction predates chat tuning: it is equally readable and causally effective in the base model.
+    \item We quantify the limits of the lever. In-distribution clamping has tiny effects, useful shifts need about $3\times$ the natural human--AI separation, and different AI-ness measures rank interventions differently.
+\end{itemize}
+
+\Secref{sec:related} reviews related work, \secref{sec:method} describes our setup, \secref{sec:results} reports the four experiments, and \secref{sec:discussion} discusses implications and limitations.

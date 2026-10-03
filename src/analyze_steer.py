@@ -124,7 +124,7 @@ if __name__ == "__main__":
     meths = [("ai", "d_AI (L20)", "C0"), ("ai_resid", "d_AI ⟂ confounds", "C1"), ("formality", "formality", "C2"),
              ("assistant_axis", "assistant axis", "C3"), ("verbosity", "verbosity", "C4"), ("random", "random (3 dirs)", "gray"), ("L16_ai", "d_AI (L16)", "C5")]
     panels = [("desklib", "desklib P(AI)"), ("binoculars", "Binoculars score (higher = more human)"),
-              ("local_ai_likelihood", "Llama-3.1-8B judge AI-likelihood"), ("openrouter_ai_likelihood", "Nemotron-3-Ultra judge AI-likelihood"),
+              ("local_ai_likelihood", "Llama-3.1-8B judge AI-likelihood"), ("openrouter_ai_likelihood", "Nemotron-3-Super judge AI-likelihood (partial)"),
               ("local_fluency", "judge fluency (1-5)"), ("sim_unsteered", "content sim. to unsteered"), ("english", "fraction English"), ("proj_ai", "read-back projection on d_AI")]
     fig, axs = plt.subplots(2, 4, figsize=(20, 9))
     for ax, (m, lab) in zip(axs.flat, panels):

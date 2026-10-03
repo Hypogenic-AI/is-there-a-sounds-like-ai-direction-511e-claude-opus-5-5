@@ -1,0 +1,17 @@
+\section{Related Work}
+\label{sec:related}
+
+\para{Detecting machine text from model internals.}
+Zero-shot detectors use the likelihood statistics of a reader model~\citep{mitchell2023detectgpt,bao2024fastdetectgpt,hans2024binoculars}. Supervised detectors fine-tune classifiers on benchmarks such as \hcthree~\citep{guo2023hc3}, \mage~\citep{li2024mage}, and \raid~\citep{dugan2024raid}.
+A newer line of work reads the residual stream directly. \citet{quaremba2026linear} show that per-layer linear probes on a frozen reader generalise across 16 benchmark subsets. SV-Detect~\citep{vishnyakov2026svdetect} turns per-layer human-\versus-AI steering vectors into detection features. Steer-to-Detect~\citep{liang2026steer} learns a vector that sharpens separation at read time. \citet{kuznetsov2025feature} find interpretable sparse-autoencoder features for AI text, including formality and repetition. Intrinsic dimension also separates the two~\citep{tulchinskii2023intrinsic}.
+All of these \emph{read} the signal. Unlike them, we test whether the direction \emph{writes}: does moving the generator along it change how independent detectors score its output?
+
+\para{Linear representations and activation steering.}
+Concepts are often encoded as linear directions~\citep{park2024linear,marks2024geometry}. Adding or ablating these directions controls behaviour, as shown by ActAdd~\citep{turner2023actadd}, contrastive activation addition~\citep{rimsky2024caa}, representation engineering~\citep{zou2023repe}, refusal directions~\citep{arditi2024refusal}, persona vectors~\citep{chen2025persona}, and style vectors~\citep{konen2024style}. LEACE gives closed-form concept erasure~\citep{belrose2023leace}.
+Evaluations are sobering. AxBench finds that prompting beats steering and that steering costs fluency~\citep{wu2025axbench}. Steering is weaker on instruct models than on base models~\citep{steerweak2026}, and writing-style steering transfers poorly~\citep{stylesteer2026}.
+Building on these recipes, we use difference-of-means steering, which \citet{marks2024geometry} find more causal than probe directions. Following AxBench, we treat prompting and matched coherence as mandatory controls.
+
+\para{What makes AI text sound like AI.}
+\citet{reinhart2024hape} build the parallel \hape corpus and find that instruct models overuse nominalisations, participial clauses, and long words, while base Llama-3 writes much like humans. Source models are also identifiable from word choice alone~\citep{sun2025idiosyncrasies}.
+The Assistant axis~\citep{lu2026assistant} is a persona direction separating the default assistant from role-play characters. It already exists in base models, which makes it the most natural candidate for an ``AI-ness'' confound.
+Fine-tuning~\citep{pedrotti2025stress} and reinforcement learning~\citep{david2025authormist} can train a model to evade detectors. We ask the cheaper question of how far a single direction gets. We also test directly whether ``sounding like AI'' is the same as ``being the Assistant''.

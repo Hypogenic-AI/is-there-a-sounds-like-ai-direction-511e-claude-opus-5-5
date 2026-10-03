@@ -1,0 +1,92 @@
+\section{Method}
+\label{sec:method}
+
+Our main question is whether a direction that separates human from AI text also controls generation. We state four hypotheses.
+{\bf H1 (read-out):} a content-matched difference-of-means direction separates human from AI text and transfers to unseen datasets and generators.
+{\bf H2 (causal):} subtracting it during generation lowers AI-ness on at least two independent measures, more than an equal-norm random direction does, at matched coherence and content.
+{\bf H3 (distinct):} it is not formality, fluency, word length, domain, verbosity, or the Assistant axis, and a version with these projected out still steers.
+{\bf H4 (base \versus instruct):} it exists in the base model.
+
+\subsection{Models and data}
+\para{Models.} Our subject models are \qwen and its base model \qwenbase (28 blocks, $d=3584$), run in bf16 on one A6000 GPU.
+
+\para{Fitting data.} We fit directions only on content-matched pairs, so that topic cannot drive the difference.
+\hape~\citep{reinhart2024hape} pairs a human continuation of a prefix with continuations of the same prefix by GPT-4o, Llama-3-70B-Instruct, Llama-3-8B-Instruct (held out as an unseen generator), and Llama-3-8B/70B base. It covers 6 genres, with 150 training and 60 test documents per genre.
+\hcthree~\citep{guo2023hc3} pairs human and ChatGPT answers to the same question across 5 domains (700 training and 260 test questions). We undo its pre-tokenised spacing.
+We truncate each pair to the same number of Qwen tokens ($\le 128$).
+
+\para{Transfer data.} We use a \raid subset~\citep{dugan2024raid} with 11 base and chat generators, 8 domains, and paraphrased human text. We also use the in-distribution and out-of-distribution (GPT-4, GPT-4-paraphrased) sets of \mage~\citep{li2024mage}.
+
+\para{Steering prompts.} We use 150 \hcthree questions never used for fitting (30 per domain), plus 30 separate pilot questions. The human and ChatGPT answers to these questions serve as references.
+
+\subsection{Directions}
+We feed raw text (no chat template) to the model and mean-pool the residual stream $\vh^{(\ell)}$ over tokens at every layer $\ell$, excluding the attention-sink first token. Let $\mu^{(\ell)}_{\text{AI}}$ and $\mu^{(\ell)}_{\text{H}}$ be the mean pooled activations of AI and human training texts. We define
+\begin{equation}
+\dai^{(\ell)} = \tfrac{1}{2}\Big(\mathrm{unit}\big(\mu^{(\ell)}_{\text{AI}}-\mu^{(\ell)}_{\text{H}}\big)_{\text{\hape}} + \mathrm{unit}\big(\mu^{(\ell)}_{\text{AI}}-\mu^{(\ell)}_{\text{H}}\big)_{\text{\hcthree}}\Big),
+\end{equation}
+where the \hape term uses GPT-4o and Llama-3-70B-Instruct, and the \hcthree term uses ChatGPT. We use difference-of-means rather than probe weights because it tends to be more causal~\citep{marks2024geometry}.
+
+\para{Confound directions.} We build seven confound directions in the same model and layer.
+\begin{itemize}[leftmargin=*,itemsep=0pt,topsep=0pt]
+    \item {\bf Formality}: human texts in the top \versus bottom tercile of the s-nlp formality ranker, within genre or domain strata.
+    \item {\bf Fluency}: human texts with high \versus low mean token log-probability.
+    \item {\bf Word length}: texts with long \versus short average words (lexical sophistication).
+    \item {\bf Domain}: \hcthree Reddit-ELI5 \versus other sources.
+    \item {\bf Post-training}: Llama-3 instruct \versus base continuations of the same \hape prefix.
+    \item {\bf Assistant axis}: a cheap rebuild of \citet{lu2026assistant}. We contrast default-assistant responses with responses under 40 role-play system prompts on 20 questions, using response-token activations.
+    \item {\bf Verbosity}: responses under ``be extremely brief'' \versus ``be long and detailed'' system prompts.
+\end{itemize}
+\daiperp is \dai orthogonalised against the span of the formality, fluency, word-length, domain, Assistant-axis, and verbosity directions ($\cos(\dai,\daiperp)=0.78$). We exclude the post-training direction from this span, because it is a candidate \emph{explanation} of \dai rather than a nuisance.
+Raw cosines in the residual stream are inflated by anisotropy, so we also report \emph{whitened} (Mahalanobis) cosines. Even a random split of human texts has raw cosine 0.44 with formality.
+
+\subsection{Interventions}
+\para{Additive steering.} At the output of one block, at all positions, we set
+\begin{equation}
+\vh \leftarrow \vh + \alpha\,\|\bar\vh\|\,\hat\vv,
+\end{equation}
+where $\hat\vv$ is the unit direction and $\|\bar\vh\|=355.7$ is the mean residual norm at block 20 on the prompts. Negative $\alpha$ moves toward ``human''. We chose the layer and $\alpha$ grid on the 30 pilot prompts before the main run. Block 20 kept English output and preserved content best, and $\alpha\in[-0.3,-0.1]$ was the useful window. We run block 16 as a secondary layer.
+Generation uses the chat template, temperature 0.7, top-$p$ 0.95, and 160 new tokens. We use the same seed for every condition, so outputs are paired per prompt.
+
+\para{Conditions.} Each condition has 150 prompts, giving 9,000 main generations:
+no steering; \dai at $\alpha\in\{-0.1,-0.15,-0.2,-0.25,-0.3,+0.1,+0.2\}$; and \daiperp, formality, Assistant axis, verbosity, and three random equal-norm directions, each at the five negative $\alpha$.
+We also run \dai and random at block 16; zero-ablation of \dai at blocks 10--27; a ``write like a human'' system prompt; and the prompt combined with \dai at $\alpha=-0.15$.
+
+\para{Mean-clamp.} Zero-ablation pushes activations off-distribution, because the human mean projection is not zero. We therefore also \emph{clamp} the \dai coordinate to a target and leave the orthogonal complement unchanged. The targets are the human-text mean, the AI-text mean, or the human mean minus one standard deviation at block 20, and the human mean at every block from 10 to 27. As a control, we apply the same clamp to three random directions.
+
+\para{Base model.} We prompt \qwenbase with ``Question: \ldots\textbackslash nAnswer:'' and steer with its own \daibase, the instruct model's \daiinst, or a random direction, at $\alpha\in\{-0.2,-0.1,+0.1,+0.2,+0.3\}$.
+
+\subsection{Measures}
+\label{sec:measures}
+None of our measures sees the activations that \dai was fit on.
+
+\para{AI-ness.} We use two supervised detectors: \desklib (DeBERTa-v3-large) and \fakespot (RoBERTa), both reporting \pai. We use the zero-shot \binoculars score~\citep{hans2024binoculars} with a Falcon-7B observer and Falcon-7B-instruct performer; lower means more machine-like. Our LLM judges are Llama-3.1-8B-Instruct (local, all texts), Cohere command-a-plus (14 key conditions $\times$ 50 prompts), and Nemotron-3-Super-120B (a partial run of 1,035 texts). Each judge is blind to condition and gives a 0--100 AI-likelihood plus 1--5 fluency and relevance.
+
+\para{Validity check.} Before using a measure, we check that it separates the 150 human from the 150 ChatGPT reference answers (\tabref{tab:validity}). The supervised detectors and \binoculars are near-perfect. The local Llama judge is at chance (AUROC 0.48), so we use it \emph{only} for fluency and relevance. The Cohere judge is weakly valid (0.71). Our AI-ness conclusions therefore rest on \desklib, \fakespot, and \binoculars, with the Cohere judge as a secondary check.
+
+\begin{table}[t]
+    \centering
+    \small
+    \begin{tabular}{@{}lccc@{}}
+        \toprule
+        Measure & AUROC (human \versus ChatGPT) & Mean human & Mean ChatGPT \\
+        \midrule
+        \desklib \pai & {\bf 0.994} & 0.35 & 0.99 \\
+        \fakespot \pai & 0.981 & 0.41 & 0.98 \\
+        \binoculars score & {\bf 0.999} & 0.98 & 0.63 \\
+        \dai read-back projection & 0.898 & 35.8 & 57.6 \\
+        Falcon log-perplexity (not a detector) & 0.944 & 2.43 & 1.37 \\
+        Cohere judge AI-likelihood (50+50) & 0.709 & 54.5 & 69.8 \\
+        Llama-3.1-8B judge AI-likelihood & 0.479 & 62.4 & 62.3 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Validity of AI-ness measures on 150 human \versus 150 ChatGPT reference answers to our steering questions. Supervised detectors and \binoculars are near-perfect; the local 8B judge is at chance and is used only for fluency and relevance.}
+    \label{tab:validity}
+\end{table}
+
+\para{Coherence and content.} We measure judge fluency and relevance, Falcon-7B log-perplexity, distinct-2, the fraction of English output, and all-mpnet-base-v2 cosine similarity to the unsteered answer with the same prompt and seed.
+
+\para{Manipulation check.} The \emph{unsteered} instruct model reads every output back, and we project the pooled activation onto \dai.
+
+\para{Matched coherence.} We compare methods at matched quality in two ways. {\em Per condition}: we take the strongest $\alpha$ whose mean fluency and relevance stay within 0.5 of unsteered with $\ge 95\%$ English output. {\em Per text}: we keep only generations with fluency $=5$, relevance $\ge 4$, and English output. Then detector shifts cannot come from broken text.
+
+\para{Statistics.} All comparisons are paired per prompt. We report bootstrap 95\% CIs (2,000 resamples) and Wilcoxon signed-rank tests with Holm correction within each table. For the per-text matched subsets, which are unpaired after filtering, we use Mann-Whitney tests.

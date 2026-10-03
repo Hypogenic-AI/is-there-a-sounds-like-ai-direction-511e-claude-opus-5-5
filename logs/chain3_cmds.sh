@@ -1,0 +1,1 @@
+python steer_extra.py > ../logs/steer_extra.log 2>&1 && python score_gens.py gen_extra.json > ../logs/score_extra.log 2>&1 && python readback.py scores_gen_extra.parquet > ../logs/readback_extra.log 2>&1 && python judge.py scores_gen_extra.parquet local > ../logs/judge_local_extra.log 2>&1; echo EXTRA_DONE >> ../logs/chain3.done

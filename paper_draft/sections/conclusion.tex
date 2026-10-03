@@ -1,0 +1,11 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We asked whether the human-\versus-AI direction that detectors read from the residual stream also controls how AI-like a model's writing sounds. In \qwen it does.
+Subtracting \dai lowers supervised detector scores (\desklib 0.996 $\to$ 0.84) and raises the zero-shot \binoculars score. Equal-norm random directions, formality, verbosity, the Assistant axis, and a ``write like a human'' prompt fail to match this at equal coherence, and the effect holds among perfectly fluent outputs and after projecting out six confounds.
+The direction is better described as the style signature of chat tuning than as ``machine text''. It is distinct from the Assistant persona, and it already exists, with the same orientation, in the base model, which it steers in both directions.
+It is also a weak lever. Fluent steered text remains far from human scores, in-distribution clamping barely moves detectors, and an LLM judge finds prompting equally effective.
+
+{\bf Takeaway:} ``sounding like AI'' has a real, causal linear component, but no single direction captures it.
+
+\para{Future work.} We plan to steer with a low-rank subspace of the human--AI difference instead of one vector, and to apply steering only after the first sentence. We also plan to replicate on Gemma-2 with SAE features and on Llama-3.1-8B, to run human evaluation of fluent steered outputs, and to test whether the detectors' remaining signal lives in formatting by combining \dai with markdown removal.

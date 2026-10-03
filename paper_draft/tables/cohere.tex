@@ -1,0 +1,26 @@
+\begin{table}[t]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}lccccc@{}}
+        \toprule
+        Condition & AI-likelihood & $\Delta$ \versus unsteered [95\% CI] & $p_{\text{holm}}$ & Fluency & \% rated $<50$ \\
+        \midrule
+        Unsteered & 73.9 & -- & -- & 4.26 & 2\% \\
+        \dai $\alpha=-0.15$ & 67.4 & $-6.2$ [$-10.7$, $-2.1$] & 0.038 & 4.06 & 8\% \\
+        \dai $\alpha=-0.2$ & 67.7 & $-6.2$ [$-9.6$, $-3.0$] & 0.038 & 3.56 & 4\% \\
+        \dai $\alpha=-0.25$ & 63.0 & $-10.9$ [$-17.5$, $-4.7$] & 0.061 & 2.64 & 20\% \\
+        \daiperp $\alpha=-0.2$ & 68.5 & $-5.4$ [$-9.3$, $-1.9$] & 0.092 & 3.88 & 6\% \\
+        Formality $\alpha=-0.25$ & 65.6 & {\bf $-$8.3} [$-11.7$, $-4.9$] & 0.001 & 3.70 & 8\% \\
+        Assistant axis $\alpha=-0.2$ & 71.9 & $-2.0$ & 1.0 & 3.32 & 6\% \\
+        Random 0/1/2 $\alpha=-0.2$ & 73.2/70.4/71.7 & $-0.7$/$-3.5$/$-2.2$ & $\ge 0.37$ & 4.18--4.20 & 0--2\% \\
+        Prompt ``write like a human'' & 67.2 & $-6.7$ [$-9.8$, $-3.6$] & 0.004 & {\bf 4.24} & 6\% \\
+        \dai $\alpha=+0.2$ & 75.3 & $+1.4$ & 1.0 & 3.94 & 0\% \\
+        \midrule
+        {\em \hcthree human answers} & {\em 54.5} & & & {\em 3.58} & {\em 38\%} \\
+        {\em \hcthree ChatGPT answers} & {\em 69.8} & & & {\em 4.04} & {\em 0\%} \\
+        \bottomrule
+    \end{tabular}
+    }
+    \caption{Blind Cohere command-a-plus judge (0--100 AI-likelihood; 50 prompts per condition; Holm over 22 tests). The judge sees \dai lower AI-likelihood more than random directions do, but formality steering and prompting do at least as well. The judge itself is only weakly valid (AUROC 0.71).}
+    \label{tab:cohere}
+\end{table}

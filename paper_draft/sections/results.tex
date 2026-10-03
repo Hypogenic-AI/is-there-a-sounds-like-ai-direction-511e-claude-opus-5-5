@@ -1,0 +1,102 @@
+\section{Results}
+\label{sec:results}
+
+\subsection{Read-out: a chat-generator direction (H1)}
+\label{sec:readout}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.99\linewidth]{figures/readout_layers_transfer.png}
+    \caption{Read-out of \dai. \figleft{} AUROC of the \dai projection per layer for the instruct (solid) and base (dashed) models. Separation is good for chat generators but near chance for Llama-3-8B {\em base} continuations (purple). \figcenter{} Logistic probes reach 0.999 in both models, and $\cos(\daibase,\daiinst)$ stays $\ge 0.98$ at every layer. \figright{} Transfer at block 20: \dai separates chat and instruct generators (blue) from human text, but barely separates base and older LMs (red).}
+    \label{fig:readout}
+\end{figure}
+
+\input{tables/readout}
+
+{\bf Does a single direction separate human from AI text?} Yes. At block 20, the \dai projection reaches AUROC 0.89--0.91 on held-out content-matched pairs (\tabref{tab:readout}). It transfers across datasets (fitting on \hape and testing on \hcthree gives 0.88), to an unseen instruct generator (0.899), and to \raid and \mage chat generators (0.82--0.86).
+It fails, however, on text from {\em base} language models: 0.58 on Llama-3 base continuations and 0.58--0.71 on older \raid generators (\figref{fig:readout}, right). A full logistic probe is near-perfect (0.997--0.9997), replicating \citet{quaremba2026linear}, but it uses many directions. We steer with the one-dimensional \dai because it is a cleaner object.
+Random directions alone reach AUROCs between 0.27 and 0.67, because the residual stream is anisotropic, so moderate AUROCs ($\le 0.7$) for any single direction carry little meaning.
+
+\subsection{Disentanglement: not formality, not the Assistant (H3)}
+\label{sec:disentangle}
+
+\input{tables/disentangle}
+
+\Tabref{tab:disentangle} compares \dai with the confound directions. Raw cosines are misleading: word length (0.55), verbosity (0.28), and the Assistant axis (0.25) look related, but even a random split of human texts has raw cosine 0.44 with formality. After whitening, \dai is nearly orthogonal to every confound ($|\cos| \le 0.05$), including the Assistant axis (0.005).
+Projecting the six-confound subspace out and refitting {\em raises} the difference-of-means AUROC from 0.89 to 0.98; the confounds added noise, not signal.
+A cross-validated logistic regression on nine text covariates plus domain dummies reaches AUROC 0.944. The covariates are formality, log-probability, word length, length, contractions, an AI-ism lexicon, distinct-2, first person, and markdown. Adding the \dai projection raises this to 0.956. So \dai carries information beyond surface statistics, though it correlates moderately with some of them ($|r|\le 0.38$: longer words, fewer contractions, less first person).
+
+{\bf What is \dai, then?} The one large overlap is with the {\em post-training} direction: Llama-3 instruct minus base continuations of the same prefix, from a different model family (raw cosine 0.90, whitened 0.20). Together with the transfer pattern in \secref{sec:readout}, this suggests that \dai encodes the style that instruction tuning produces, not ``machine-generated'' text in general.
+
+\subsection{Causal steering (H2)}
+\label{sec:steer}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.99\linewidth]{figures/fig1_steer_dose_response.png}
+    \caption{Dose--response of steering \qwen (150 held-out questions, 95\% CIs). {\em Top:} \dai at block 20 (blue), \daiperp (orange), and \dai at block 16 (dark green) lower the supervised detectors, while equal-norm random directions (gray) stay at ceiling. \binoculars rises for every perturbation, random included. {\em Bottom:} the cost in fluency, content similarity, and read-back projection. The ``write like a human'' prompt (star) leaves the supervised detectors untouched. Dotted and dash-dotted lines are \hcthree human and ChatGPT references.}
+    \label{fig:dose}
+\end{figure}
+
+\input{tables/steer_main}
+
+{\bf Does subtracting \dai make output read as more human?} Yes, on all three valid detectors. At block 20 and $\alpha=-0.2$, \desklib \pai falls from 0.996 to 0.841, \fakespot from 0.994 to 0.853, and \binoculars rises from 0.70 to 0.83 (\tabref{tab:steer_main}, \figref{fig:dose}).
+Random directions of equal norm leave the supervised detectors at 0.99. Paired per prompt against the mean of three random directions, \dai lowers \desklib by $-0.154$ [$-0.20$, $-0.11$] ($p<10^{-10}$) and raises \binoculars by $+0.109$ at $\alpha=-0.2$. At $\alpha=-0.15$ the gaps are $-0.077$ and $+0.083$ (all $p<10^{-3}$).
+The cost is a fluency drop from 4.88 to 4.27 at $\alpha=-0.2$ (\versus 4.85 for random). Relevance stays at 4.72, and similarity to the unsteered answer is 0.83 (\versus 0.88).
+\daiperp, with all six confounds projected out, steers as well as \dai ($\desklib=0.858$ at $\alpha=-0.2$).
+The ``write like a human'' prompt does not move \desklib at all (0.996).
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.99\linewidth]{figures/fig2_matched_coherence.png}
+    \caption{Matched coherence per text. We keep only generations judged perfectly fluent (5/5), on-topic (relevance $\ge 4$), and in English. Among these, \dai and \daiperp (blue) still lower \desklib to 0.85--0.86 (0.67 at block 16), while random directions, the prompt (gray), and formality and verbosity (green) stay at 0.96--1.00. Error bars are 95\% bootstrap CIs; $n$ is the number of surviving texts.}
+    \label{fig:matched}
+\end{figure}
+
+{\bf Is the effect just broken text?} No. \Figref{fig:matched} keeps only generations judged perfectly fluent and on-topic. In that subset, \dai at $\alpha=-0.2$ gives \desklib 0.85 ($n=56$) and \daiperp gives 0.86. Block-16 \dai gives 0.67, with 30\% of these fluent texts classified as human. By contrast, random directions give 0.99--1.00, formality 0.98, verbosity 0.96, the Assistant axis 0.93, and the prompt 1.00.
+All \dai conditions differ from unsteered at $p<10^{-4}$ (Mann-Whitney); two of the three random directions do not differ significantly.
+Per-condition matching agrees. We take the strongest $\alpha$ whose mean fluency and relevance stay within 0.5 of unsteered. \desklib is then 0.86 for \daiperp, 0.92 for \dai, 0.97 for the Assistant axis, 0.98 for formality, 0.99 for random, and 0.996 for the prompt.
+
+{\bf Is \dai the Assistant persona?} No. Steering away from the Assistant axis lowers the detectors only once the text collapses: at $\alpha=-0.3$, \desklib is 0.78, but fluency is 1.34, relevance 1.02, and similarity to the unsteered answer 0.40. \dai moves the detectors while the answer and the assistant role stay intact.
+
+\para{Binoculars is perplexity-confounded.} \binoculars rises under every perturbation, including random directions ($+0.09$ at $\alpha=-0.3$). Even among fluent texts, random steering moves it from 0.70 to 0.74, against 0.81 for \dai. The supervised detectors do not move under random steering, so we rely on them for the specificity claim.
+
+\para{Positive steering.} Adding \dai cannot raise the supervised detectors, which are already at 0.996. It does raise the read-back projection to the ChatGPT-reference level (54.9 $\to$ 58.4) and, at $\alpha=+0.1$, lowers \binoculars to a more machine-like 0.68 ($p=0.001$). The base model, which is not at ceiling, shows the positive direction clearly (\secref{sec:base}).
+
+\para{What changes in the text.} For the same prompt and seed, the unsteered answer opens ``{\em The forms 1099-MISC and K-1 serve different purposes in the tax system\ldots\ Let's break down each form: 1.\ **1099-MISC**: \ldots}''. At $\alpha=-0.25$ it becomes ``{\em I think you are mixing up two different things in taxation here: 1099-MISC and K-1. They are not to do with duplicate numbers, but are two differents tax forms\ldots}''.
+Steering toward human adds first-person hedging, informal abbreviations, and small errors, while the answer keeps its topic and structure. Part of what detectors read as ``human'' is therefore {\em less polish}.
+
+\para{Manipulation check.} At $\alpha=-0.25$, the unsteered model reads steered outputs exactly at the human level on \dai (read-back 35.8, equal to real human answers). Yet \desklib still gives 0.85, against 0.35 for human answers. Moving the model's own \dai coordinate to the human level captures only part of what external detectors respond to.
+
+\subsection{In-distribution clamping: real but small}
+\label{sec:clamp}
+
+\input{tables/base_clamp}
+
+Zero-ablating \dai destroys the text (fluency 1.00), because the human mean projection is not zero (32 at block 20). We therefore clamp the coordinate within its natural range instead (\tabref{tab:base_clamp}, bottom; \figref{fig:base}, right).
+Clamping to the AI mean does nothing, since generations already sit there (54.9 \versus 53.6), which serves as a consistency check. Clamping to the human mean minus one standard deviation lowers \desklib to 0.960 and raises \binoculars to 0.757, with no fluency cost. Against the same clamp on random directions, the differences are $-0.034$ [$-0.052$, $-0.020$] for \desklib and $+0.057$ for \binoculars (both $p_{\text{holm}}<10^{-4}$).
+The effect is specific but small. For scale, additive steering at $\alpha=-0.2$ shifts the coordinate by 71 units, about $3.3\times$ the natural human--AI gap of 21 units. Large detector effects need extrapolation beyond the range that human text occupies.
+
+\subsection{Base \versus instruct: present before chat tuning (H4)}
+\label{sec:base}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.99\linewidth]{figures/fig3_base_and_clamp.png}
+    \caption{\figleft{} and \figcenter{} Steering the base model \qwenbase. Its own \dai (blue) and the instruct model's \dai (orange) give identical, bidirectional effects on \desklib and \binoculars, while a random direction (gray) is flat. \figright{} In-distribution mean-clamp in the instruct model. Clamping the \dai coordinate toward the human range gives small but direction-specific drops in \desklib; the same clamp on random directions has no effect.}
+    \label{fig:base}
+\end{figure}
+
+The base and instruct directions are nearly identical: $\cos(\daibase,\daiinst)$ ranges from 0.984 to 0.995 across layers (0.991 at block 20). Base-model read-out is as good or slightly better (\tabref{tab:readout}; Cohen's $d$ 1.20 \versus 1.00 at block 20). Chat tuning neither creates nor sharpens the read-out direction.
+
+In the base model, steering works in {\em both} directions (\tabref{tab:base_clamp}, top; \figref{fig:base}). Subtracting \daibase at $\alpha=-0.2$ lowers \desklib from 0.938 to 0.870 ($p_{\text{holm}}=8\times10^{-4}$) and raises \binoculars to 0.818. Adding it at $\alpha=+0.3$ raises \fakespot from 0.77 to 0.91 and lowers \binoculars to 0.670, while slightly {\em raising} relevance (4.18 $\to$ 4.49) and lengthening answers from 81 to 99 words. The instruct model's direction has the same effect, and random directions have no significant effect.
+Base \qwenbase answers already look AI-like (\desklib 0.94; read-back 57.7, close to the ChatGPT references), consistent with a pretraining corpus that contains much synthetic and instruction-style data. Chat tuning moves the model's outputs further along the direction (\desklib 0.94 $\to$ 0.996, $p<10^{-4}$) without changing the direction itself.
+
+\subsection{LLM judges: same sign, different ranking}
+\label{sec:judges}
+
+\input{tables/cohere}
+
+The blind Cohere judge agrees on the sign (\tabref{tab:cohere}). \dai at $\alpha=-0.2$ lowers AI-likelihood by 6.2 points relative to unsteered, and by 4.1 [$-7.0$, $-1.0$] relative to the mean of the random directions ($p=0.005$). A partial Nemotron-3-Super run at $\alpha=-0.1$ ($n\approx150$ per condition) agrees: \dai minus random is $-4.0$ [$-7.2$, $-0.9$] ($p=0.03$).
+On these judges, however, \dai is {\em not} specific. Formality steering ($-8.3$) and the ``write like a human'' prompt ($-6.7$, with no fluency cost) do as well or better. On Nemotron, formality, the Assistant axis, and \daiperp score 69.6--69.9, similar to \dai's 70.1.
+The judges appear to respond to surface register (informality, contractions, no markdown), which formality steering and prompting change directly. The supervised detectors rank the methods the other way round: \dai is far ahead, and formality, prompting, and random are similar. This is a real split between measures, not noise. Different readers of ``AI-ness'' key on different features, and \dai targets the one the trained detectors use.

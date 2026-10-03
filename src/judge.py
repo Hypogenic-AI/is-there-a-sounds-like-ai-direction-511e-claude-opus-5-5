@@ -1,8 +1,9 @@
 """LLM judges, blind to condition. Returns AI-likelihood (0-100), fluency/coherence (1-5), relevance (1-5).
 Backends (OpenRouter paid key was over its daily limit and the Cohere key is a 20 calls/min trial key, see REPORT):
   local      : meta-llama/Llama-3.1-8B-Instruct, greedy, on every generation
-  openrouter : nvidia/nemotron-3-ultra-550b-a55b:free on a stratified subset (validation of the local judge)
-usage: python judge.py scores_xxx.parquet local|openrouter [cond_regex] [max_pid]"""
+  cohere     : command-a-plus-05-2026 (Cohere API, trial key: ~20 calls/min, ~1000 calls total) on a stratified subset
+  openrouter : nvidia/nemotron-3-super-120b-a12b:free (second, independent judge; free tier, reasoning effort low)
+usage: python judge.py scores_xxx.parquet local|openrouter|cohere [cond_regex] [max_pid]"""
 import sys, os, json, re, time, hashlib, threading
 from concurrent.futures import ThreadPoolExecutor
 import requests
@@ -31,7 +32,7 @@ Respond with only a JSON object: {{"ai_likelihood": <int>, "fluency": <int>, "re
 lock = threading.Lock()
 
 
-OR_MODEL = "nvidia/nemotron-3-ultra-550b-a55b:free"
+OR_MODEL = os.environ.get("OR_MODEL", "nvidia/nemotron-3-super-120b-a12b:free")
 
 
 def parse(txt):
@@ -45,14 +46,15 @@ def call_openrouter(prompt, retries=8):
     err = ""
     for k in range(retries):
         try:
-            r = c.chat.completions.create(model=OR_MODEL, messages=[{"role": "user", "content": prompt}], temperature=0.0, max_tokens=2000)
+            r = c.chat.completions.create(model=OR_MODEL, messages=[{"role": "user", "content": prompt}], temperature=0.0, max_tokens=2000,
+                                           extra_body={"reasoning": {"effort": "low"}})
             return parse(r.choices[0].message.content)
         except Exception as e:
             err = str(e)[:300]; time.sleep(min(2 ** k, 60))
     return dict(error=err)
 
 
-def judge_local(prompts, bs=16):
+def judge_local(prompts, bs=48):
     from transformers import AutoModelForCausalLM, AutoTokenizer
     name = "meta-llama/Llama-3.1-8B-Instruct"
     tok = AutoTokenizer.from_pretrained(name); tok.pad_token = tok.eos_token; tok.padding_side = "left"
@@ -69,7 +71,8 @@ def judge_local(prompts, bs=16):
     return out
 
 
-def call(prompt, retries=8):
+def call(prompt, retries=20):
+    err = ""
     for k in range(retries):
         try:
             r = requests.post("https://api.cohere.com/v2/chat", timeout=60,
@@ -77,9 +80,9 @@ def call(prompt, retries=8):
                               json={"model": MODEL, "messages": [{"role": "user", "content": prompt}], "temperature": 0.0,
                                     "response_format": {"type": "json_object"}})
             if r.status_code == 429 or r.status_code >= 500:
-                time.sleep(2 ** min(k, 5)); continue
+                err = f"HTTP {r.status_code}: {r.text[:200]}"; time.sleep(min(5 * (k + 1), 60)); continue
             r.raise_for_status()
-            txt = r.json()["message"]["content"][0]["text"]
+            txt = [c["text"] for c in r.json()["message"]["content"] if c.get("type") == "text"][0]
             j = json.loads(re.search(r"\{.*\}", txt, re.S).group(0))
             return dict(ai_likelihood=float(j["ai_likelihood"]), fluency=float(j["fluency"]), relevance=float(j["relevance"]))
         except Exception as e:
@@ -117,7 +120,7 @@ if __name__ == "__main__":
 
     def work(j):
         key, f, c, pid, p = j
-        res = call_openrouter(p); res.update(key=key, file=f, cond=c, pid=pid)
+        res = call(p) if backend == "cohere" else call_openrouter(p); res.update(key=key, file=f, cond=c, pid=pid)
         with lock:
             fh.write(json.dumps(res) + "\n"); fh.flush()
     with ThreadPoolExecutor(int(os.environ.get("JUDGE_WORKERS", 4))) as ex:

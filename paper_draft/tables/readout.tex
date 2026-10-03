@@ -1,0 +1,26 @@
+\begin{table}[t]
+    \centering
+    \small
+    \begin{tabular}{@{}lcc@{}}
+        \toprule
+        Test set (AUROC of \dai projection, block 20) & \textsc{Instruct} & \textsc{Base} \\
+        \midrule
+        \hape GPT-4o \versus human (same prefix) & 0.905 & {\bf 0.913} \\
+        \hape Llama-3-8B-Instruct (unseen generator) & 0.899 & {\bf 0.909} \\
+        \hcthree ChatGPT \versus human (same question) & 0.889 & {\bf 0.894} \\
+        Fit \hape $\to$ test \hcthree / fit \hcthree $\to$ test \hape & 0.88 / 0.85 & 0.89 / 0.87 \\
+        \mage OOD GPT-4 / GPT-4-paraphrased & 0.85 / 0.82 & 0.88 / 0.85 \\
+        \raid chat generators (5) & 0.84--0.86 & 0.85--0.87 \\
+        \midrule
+        \raid base / older LMs (5) & 0.58--0.71 & 0.59--0.72 \\
+        \hape Llama-3-8B / 70B {\em base} continuations & 0.59 / 0.58 & 0.58 / 0.58 \\
+        \mage in-distribution (older generators) & 0.57 & 0.58 \\
+        \raid paraphrased human \versus human & 0.56 & 0.55 \\
+        \midrule
+        Logistic probe, matched test (blocks 4--27) & 0.997--0.9997 & 0.996--0.9995 \\
+        10 random directions (\hcthree, block 14) & 0.27--0.67 & -- \\
+        \bottomrule
+    \end{tabular}
+    \caption{Read-out and transfer of \dai. A single direction separates content-matched pairs (AUROC $\approx$ 0.89--0.91) and transfers to unseen chat generators, but not to text from base LMs (bottom block). The base model's direction reads out equally well or slightly better.}
+    \label{tab:readout}
+\end{table}

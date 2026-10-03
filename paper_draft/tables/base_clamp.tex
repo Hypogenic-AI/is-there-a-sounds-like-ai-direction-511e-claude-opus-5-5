@@ -1,0 +1,27 @@
+\begin{table}[t]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}lccccc@{}}
+        \toprule
+        Condition & \desklib & \fakespot & \binoculars & Fluency & Relevance \\
+        \midrule
+        \multicolumn{6}{@{}l}{\em Base model \qwenbase (Q/A completion format)} \\
+        Unsteered & 0.938 & 0.772 & 0.740 & 4.66 & 4.18 \\
+        Own \daibase $\alpha=-0.2$ & {\bf 0.870} & 0.693 & {\bf 0.818} & 4.31 & 3.63 \\
+        Own \daibase $\alpha=+0.3$ & 0.959 & {\bf 0.914} & {\bf 0.670} & 4.69 & 4.49 \\
+        Instruct \daiinst $\alpha=-0.2$ / $+0.3$ & 0.870 / 0.957 & 0.699 / 0.916 & 0.817 / 0.667 & 4.35 / 4.70 & 3.59 / 4.57 \\
+        Random $\alpha=-0.2$ / $+0.3$ & 0.940 / 0.903 & 0.792 / 0.786 & 0.759 / 0.745 & 4.68 / 4.62 & 4.19 / 4.05 \\
+        \midrule
+        \multicolumn{6}{@{}l}{\em Instruct model \qwen, mean-clamp of the \dai coordinate} \\
+        Unsteered & 0.996 & -- & 0.700 & 4.88 & -- \\
+        Clamp b20 $\to$ AI mean & 0.997 & -- & 0.701 & 4.89 & -- \\
+        Clamp b20 $\to$ human mean & 0.988 & -- & 0.727 & 4.89 & -- \\
+        Clamp b20 $\to$ human mean $-$ 1 s.d. & {\bf 0.960} & -- & {\bf 0.757} & 4.82 & -- \\
+        Clamp b10--27 $\to$ human mean & 0.967 & -- & 0.749 & 4.79 & -- \\
+        Random directions, same clamp (3) & 0.994--0.996 & -- & 0.698--0.704 & 4.91--4.93 & -- \\
+        \bottomrule
+    \end{tabular}
+    }
+    \caption{{\em Top:} in the base model, \dai is causal in both directions, and the instruct model's direction works identically; random directions have no significant effect. Bold marks the strongest effect in each direction. {\em Bottom:} in-distribution clamping of the \dai coordinate in the instruct model gives small but direction-specific shifts with no fluency cost.}
+    \label{tab:base_clamp}
+\end{table}

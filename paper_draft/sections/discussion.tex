@@ -1,0 +1,29 @@
+\section{Discussion}
+\label{sec:discussion}
+
+{\bf Is there a ``sounds like AI'' direction?} There is a direction that the model reads out of text and also uses when writing. External detectors with other architectures recognise its effect. And it is specific: random, formality, verbosity, and Assistant-axis directions of equal norm do not reproduce its effect at matched coherence. Three qualifications shape what this direction is.
+
+\para{It is chat-tuned style, not machine-ness.} \dai does not separate base-LM text from human text (AUROC 0.58). It nearly coincides with an instruct-minus-base direction from a different model family (raw cosine 0.90). This agrees with \citet{reinhart2024hape}, who find base Llama-3 close to human style, and with the failure of SV-Detect on base-model generators~\citep{vishnyakov2026svdetect}. What detectors and the direction share is the register that instruction tuning induces. That register is nonetheless already present in the pretrained \qwenbase, whose own answers score 0.94 on \desklib.
+
+\para{It is not the Assistant persona.} The whitened cosine with the Assistant axis is 0.005. The raw cosine of 0.25 is at the level that anisotropy alone produces. Steering away from the Assistant changes detector scores only once the text degenerates, whereas \dai moves them while the answer and role stay intact. \citet{lu2026assistant} find the Assistant axis in base models, and we find the same for \dai. Both directions predate chat tuning, but they are different directions: ``sounding like AI'' and ``being the Assistant'' are separable in this model.
+
+\para{It is a weak lever.} At the best coherent operating points, \desklib falls from 0.996 to 0.85--0.92 at block 20 or 0.67 at block 16. Human answers sit at 0.35, and only 5--30\% of fluent steered outputs flip to ``human''. The unsteered model reads steered text as human-level on \dai while the detectors do not. A full probe reaches 0.999 against 0.87 for the single direction, and the covariate model reaches 0.94. Together, these numbers show that AI-ness, as detectors see it, is multi-dimensional. This is a partial negative result for the ``single steerable feature'' reading.
+
+{\bf Does the model write with what it reads?} Partly, and with low gain. In-distribution moves give statistically clear but tiny effects (\desklib $-0.03$ \versus random). Useful shifts require about $3\times$ extrapolation beyond the natural human--AI gap, where fluency begins to suffer. This matches reports that steering is weak on instruct models~\citep{steerweak2026} and trades off against quality~\citep{wu2025axbench}.
+
+{\bf Prompting or steering?} The ``write like a human'' prompt changes surface features: the formality score drops from 0.84 to 0.60, markdown from 4.4 to 0.8 per 100 words, and contractions increase. Yet it does not fool the supervised detectors (0.996). Steering leaves markdown largely intact and still moves them. The detectors therefore key on something other than the formatting a prompt removes, and \dai reaches part of it. The two combine: prompt plus \dai gives the lowest read-back projection (32.8) and the highest flip rate (12\%). Unlike AxBench~\citep{wu2025axbench}, where prompting dominates, here the answer depends on the reader. Prompting wins on the LLM judge, and steering wins on trained detectors.
+
+\para{Measure validity.} Our study shows how easily AI-ness measures can mislead. A local 8B judge is at chance on real human \versus ChatGPT answers, and \binoculars rises under random perturbations because steering raises perplexity. Only the supervised detectors are both valid (AUROC $\ge 0.98$) and stable under random perturbations. We encourage steering studies of style to report validity on reference texts and random-direction controls for every measure.
+
+\para{Broader impact.} A direction that lowers detector scores could be used to evade detection. Our results show that this is not yet practical with one direction: outputs stay far from human-level scores, and fluency drops. They also show that supervised detectors depend partly on one linear feature that generators share, so detectors trained on chat-model text may fail on models whose post-training shifts that feature.
+
+\subsection{Limitations}
+\label{sec:limitations}
+\begin{itemize}[leftmargin=*,itemsep=0pt,topsep=0pt]
+    \item {\bf One model family.} We study only \qwen and \qwenbase, with block 20 as the primary layer and block 16 as the secondary layer, both chosen on a pilot. We did not run a Gemma-2 replication or an SAE analysis.
+    \item {\bf Prompts and references.} The steering prompts are ELI5-heavy \hcthree questions in 5 domains, so the human references are Reddit and expert answers. Detectors score 120-word truncations.
+    \item {\bf Detectors.} The training data of \desklib and \fakespot is undocumented and may overlap \hcthree, although neither saw our steered outputs or activations. \binoculars is perplexity-confounded. The Cohere judge covers 50 prompts $\times$ 14 conditions, and Nemotron covers only $\alpha=-0.1$ because of API limits.
+    \item {\bf Coherence.} Coherence is judged by an 8B model. Its ratings are plausible (gibberish scores 1, references 4.3--4.8) but coarse. Content drifts somewhat (similarity 0.83 for \dai \versus 0.88 for random at $\alpha=-0.2$). We ran no human evaluation.
+    \item {\bf Assistant axis.} Ours is a cheap rebuild (40 roles $\times$ 20 questions) rather than the full PCA axis of \citet{lu2026assistant}. The Assistant and verbosity directions also come from chat-context activations, whereas \dai comes from raw text. Some of the near-zero whitened cosine may reflect this difference in context.
+    \item {\bf Ceilings and seeds.} Detector ceilings hide positive-direction effects in the instruct model. We use a single seed per prompt, with the 150 prompts as the unit of replication.
+\end{itemize}

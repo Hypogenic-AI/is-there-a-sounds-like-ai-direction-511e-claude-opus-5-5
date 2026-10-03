@@ -1,0 +1,39 @@
+\begin{table}[t]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}lccccccc@{}}
+        \toprule
+        & \multicolumn{3}{c}{AI-ness} & \multicolumn{3}{c}{Coherence and content} & \\
+        \cmidrule(lr){2-4} \cmidrule(lr){5-7}
+        Condition & \desklib $\downarrow$ & \fakespot $\downarrow$ & \binoculars $\uparrow$ & Fluency & Relevance & Sim.\ to unsteered & Read-back \\
+        \midrule
+        Unsteered & 0.996 & 0.994 & 0.700 & 4.88 & 4.89 & 1.00 & 54.9 \\
+        \midrule
+        \dai $\alpha=-0.1$ & 0.972 & 0.978 & 0.757 & 4.83 & 4.89 & 0.87 & 51.0 \\
+        \dai $\alpha=-0.15$ & 0.920 & 0.944 & 0.793 & 4.64 & 4.85 & 0.84 & 47.2 \\
+        \dai $\alpha=-0.2$ & {\bf 0.841} & 0.853 & 0.830 & 4.27 & 4.72 & 0.83 & 42.0 \\
+        \dai $\alpha=-0.25$ & 0.845 & 0.619 & 0.860 & 3.63 & 4.10 & 0.80 & 35.8 \\
+        \dai $\alpha=-0.3$ & 0.906 & {\bf 0.266} & {\bf 0.881} & 2.31 & 2.52 & 0.76 & 27.8 \\
+        \dai $\alpha=+0.2$ & 0.998 & 0.999 & 0.745 & 4.74 & 4.62 & 0.87 & 58.4 \\
+        \daiperp $\alpha=-0.2$ & 0.858 & 0.854 & 0.871 & 4.40 & 4.61 & 0.83 & 47.6 \\
+        Block-16 \dai $\alpha=-0.15$ & {\bf 0.645} & 0.656 & 0.838 & 4.07 & 4.33 & 0.73 & 39.9 \\
+        \midrule
+        Random (mean of 3) $\alpha=-0.2$ & 0.995 & 0.996 & 0.721 & 4.85 & 4.80 & 0.88 & 56.3 \\
+        Random (mean of 3) $\alpha=-0.3$ & 0.993 & 0.986 & 0.790 & 4.50 & 4.53 & 0.83 & 55.4 \\
+        Formality $\alpha=-0.25$ & 0.983 & 0.952 & 0.807 & 4.46 & 4.66 & 0.83 & 47.5 \\
+        Formality $\alpha=-0.3$ & 0.985 & 0.872 & 0.866 & 3.73 & 4.00 & 0.79 & 41.1 \\
+        Assistant axis $\alpha=-0.2$ & 0.941 & 0.954 & 0.882 & 4.09 & 3.57 & 0.75 & 49.9 \\
+        Assistant axis $\alpha=-0.3$ & 0.783 & 0.667 & 0.821 & 1.34 & 1.02 & 0.40 & 33.6 \\
+        Verbosity $\alpha=-0.15$ & 0.939 & 0.955 & 0.797 & 4.56 & 4.71 & 0.86 & 50.3 \\
+        Prompt ``write like a human'' & 0.996 & 0.988 & 0.747 & 4.83 & 4.89 & 0.84 & 48.4 \\
+        Prompt + \dai $\alpha=-0.15$ & 0.835 & 0.899 & 0.851 & 4.11 & 4.73 & 0.76 & 32.8 \\
+        Zero-ablation of \dai (blocks 10--27) & 0.967 & 0.317 & 0.861 & 1.00 & 1.00 & 0.03 & 74.8 \\
+        \midrule
+        {\em \hcthree human answers} & {\em 0.348} & {\em 0.408} & {\em 0.982} & {\em 4.33} & {\em 4.26} & -- & {\em 35.8} \\
+        {\em \hcthree ChatGPT answers} & {\em 0.990} & {\em 0.978} & {\em 0.630} & {\em 4.75} & {\em 4.83} & -- & {\em 57.6} \\
+        \bottomrule
+    \end{tabular}
+    }
+    \caption{Steering \qwen at block 20 (unless noted), means over 150 held-out questions. Negative $\alpha$ moves toward ``human''. Fluency and relevance are 1--5 judge scores (Llama-3.1-8B). Read-back is the unsteered model's projection of the output onto \dai. Best AI-ness values among steered conditions in {\bf bold}; note that the strongest values come with degraded fluency, so \figref{fig:matched} compares methods at matched coherence.}
+    \label{tab:steer_main}
+\end{table}

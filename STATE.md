@@ -1,17 +1,17 @@
 # Research State
 
 - Current phase: `None`
-- Pipeline completed: `False`
+- Pipeline completed: `True`
 
 ## Previous phases
 
-resource_finder (succeeded), experiment_runner (failed)
+resource_finder (succeeded), experiment_runner (succeeded)
 
 ## Current phase context
 
 - Phase: `experiment_runner`
-- Status: `failed`
-- Started: `2026-10-03T13:55:34.536530Z`
+- Status: `completed`
+- Started: `2026-10-03T15:15:29.197555Z`
 - Next steps:
   - Validate the report and experimental artifacts before finalizing.
 
@@ -22,9 +22,9 @@ resource_finder (succeeded), experiment_runner (failed)
 
 ## Output validation
 
-- Valid: `False`
+- Valid: `True`
 - Expected: `REPORT.md`
-- Missing: `REPORT.md`
+- Missing: None
 - Outside workspace: None
 
 ## Agent notes
@@ -70,7 +70,26 @@ resource_finder (succeeded), experiment_runner (failed)
 
 ### experiment_runner
 <!-- NEURICO_AGENT_NOTES_START:experiment_runner -->
-Update this section at the end of the `experiment_runner` phase.
+**Phase:** experiment_runner COMPLETE (session 2 resumed after an interruption). All phases (plan, E1–E4, E3b, analysis, docs, validation) are done. Deliverables: REPORT.md, README.md, figures/fig1–3, results/*.csv.
+
+**Key findings**
+- **E1.** d_AI at block 20 gives AUROC 0.89–0.91 on matched pairs and transfers to chat generators (0.78–0.90), but not to base-LM text (0.58).
+- **E2.** Whitened cos with formality, fluency, domain, verbosity and the assistant axis is ≤ 0.05. Raw cos with the post-training direction is 0.90.
+- **E3.** At α = −0.2, desklib drops from 0.996 to 0.84 (random 0.99, formality 0.98, prompt 0.996). The effect holds among perfectly fluent texts (0.85; block 16: 0.67). d_AI⊥ steers equally. The effect is far from human level (0.35).
+- **E3b.** The mean-clamp effects are small but specific (−0.034 vs random).
+- **E4.** Base/instruct cos is 0.99. Base read-out is ≥ instruct. Steering the base model works both ways.
+- **Judges.** The local Llama judge is invalid (AUROC 0.48). The Cohere judge is weak (0.71): d_AI −6.2, but formality −8.3 and the prompt −6.7, so specificity holds only for the trained detectors.
+
+**Deviations**
+- The paid OpenRouter key was over its daily limit. Nemotron free covers only 1,035 texts (α = −0.1); Cohere trial covers a 14-condition × 50-prompt subset.
+- The HF cache was reset, so models were re-downloaded.
+- Zero-ablation broke the text. I replaced it with a mean-clamp (src/steer_extra.py).
+
+**Validation**
+- Re-running analyze_steer, analyze_extra and analyze_validity reproduces identical CSVs.
+- results/acts (5.8 GB) is gitignored.
+
+**Open:** single model family; Gemma/SAE replication not done; no human eval.
 <!-- NEURICO_AGENT_NOTES_END:experiment_runner -->
 
 <!-- NEURICO_AGENT_NOTES_END -->

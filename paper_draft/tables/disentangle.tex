@@ -1,0 +1,24 @@
+\begin{table}[t]
+    \centering
+    \small
+    \begin{tabular}{@{}lccc@{}}
+        \toprule
+        Direction (block 20) & Raw cos with \dai & Whitened cos & AUROC (matched test) \\
+        \midrule
+        \dai & 1 & 1 & 0.869 \\
+        \daiperp (6 confounds removed) & 0.78 & 0.26 & {\bf 0.970} \\
+        \midrule
+        Formality & $-0.23$ & 0.02 & 0.32 (0.68 flipped) \\
+        Fluency (log-prob) & 0.06 & 0.05 & 0.51 \\
+        Word length & 0.55 & $-0.01$ & 0.69 \\
+        Domain (Reddit) & $-0.02$ & 0.01 & 0.51 \\
+        Verbosity & 0.28 & 0.01 & 0.69 \\
+        Assistant axis & 0.25 & {\bf 0.005} & 0.54 \\
+        Post-training (Llama inst $-$ base) & {\bf 0.90} & 0.20 & 0.88 \\
+        \midrule
+        Null: random human/human split & $-0.09$ & 0.008 & 0.39 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Overlap of \dai with confound directions. In whitened geometry \dai is nearly orthogonal to every confound ($|\cos|\le 0.05$). The one large raw overlap is with an instruct-minus-base direction from Llama-3.}
+    \label{tab:disentangle}
+\end{table}

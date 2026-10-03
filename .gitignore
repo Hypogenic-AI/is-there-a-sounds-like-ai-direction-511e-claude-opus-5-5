@@ -344,3 +344,6 @@ Thumbs.db
 # resource_finder: cloned third-party repos are reproducible (see code/README.md)
 # -----------------------------------------------------------------------------
 code/*/
+
+# large activation caches (regenerate with src/extract_acts.py, src/confound_gen.py)
+results/acts/

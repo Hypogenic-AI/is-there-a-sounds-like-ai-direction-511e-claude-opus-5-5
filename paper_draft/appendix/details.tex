@@ -1,0 +1,12 @@
+\section{Reproducibility Details}
+\label{app:details}
+
+\para{Implementation.} We use Python 3.12, PyTorch and Transformers in bf16, scikit-learn, and sentence-transformers. Directions are fit with seed 0, and generation uses seed 1234 for every condition batch.
+
+\para{Pipeline.} Data construction, activation extraction (raw text, mean-pooled, all layers, both models), covariate scoring, confound generation, direction fitting with read-out (E1), disentanglement (E2), steering generation for the instruct model, mean-clamp and base model (E3, E3b, E4), detector scoring, read-back projection, LLM judging, and analysis are separate scripts. They are run in that order.
+
+\para{Compute.} All experiments run on one NVIDIA RTX A6000 (48\,GB). Activation extraction takes about 15 minutes. Generation takes about 25 seconds per 150-prompt condition, or about 30 minutes for the main run. Detectors and \binoculars take about 25 minutes per 9,000 texts, and the local judge about 15 minutes. API judges used free tiers (about 700 Cohere and 1,035 OpenRouter calls).
+
+\para{Judge prompt.} Each judge sees one answer and its question, without the condition. It returns a 0--100 probability that the answer was written by an AI, a 1--5 fluency score, and a 1--5 relevance score. The local judge decodes greedily.
+
+\para{Layer and scale selection.} On 30 pilot questions disjoint from the 150 test questions, we steered at several layers and coefficients before running the main experiment. Block 20 kept output in English and preserved content best. Text collapsed for $|\alpha|>0.3$, so the main grid spans $\alpha\in[-0.3,-0.1]$ with $\|\bar\vh\|=355.7$.
