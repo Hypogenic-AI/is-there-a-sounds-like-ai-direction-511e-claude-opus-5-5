@@ -1,0 +1,30 @@
+2402.01618 2024 Style Vectors for Steering Generative Large Language Model | Kai Konen, Sophie Jentzsch, Diaoulé Diallo
+2305.13242 2023 MAGE: Machine-generated Text Detection in the Wild | Yafu Li, Qintong Li, Leyang Cui
+2310.01405 2023 Representation Engineering: A Top-Down Approach to AI Transparency | Andy Zou, Long Phan, Sarah Chen
+2311.03658 2023 The Linear Representation Hypothesis and the Geometry of Large Language Models | Kiho Park, Yo Joong Choe, Victor Veitch
+2503.03601 2025 Feature-Level Insights into Artificial Text Detection with Sparse Autoencoders | Kristian Kuznetsov, Laida Kushnareva, Polina Druzhinina
+2312.06681 2023 Steering Llama 2 via Contrastive Activation Addition | Nina Panickssery, Nick Gabrieli, Julian Schulz
+2502.02716 2025 A Unified Understanding and Evaluation of Steering Methods | Shawn Im, Sharon Li
+2605.12890 2026 Steer-to-Detect: Probing Hidden Representations for Detection of LLM-Generated Texts | Luxu Liang, Xiang Li
+2310.06824 2023 The Geometry of Truth: Emergent Linear Structure in Large Language Model Representations of True/False Datasets | Samuel Marks, Max Tegmark
+2306.03819 2023 LEACE: Perfect linear concept erasure in closed form | Nora Belrose, David Schneider-Joseph, Shauli Ravfogel
+2410.16107 2024 Do LLMs write like humans? Variation in grammatical and rhetorical styles | Alex Reinhart, Ben Markey, Michael Laudenbach
+2502.12150 2025 Idiosyncrasies in Large Language Models | Mingjie Sun, Yida Yin, Zhiqiu Xu
+2608.24780 2026 Linear Probing Provides Robust and Efficient Detection of Machine-Generated Text | Gerrit Quaremba, Hanqi Yan, Elizabeth Black
+2301.07597 2023 How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection | Biyang Guo, Xin Zhang, Ziyuan Wang
+2501.17148 2025 AxBench: Steering LLMs? Even Simple Baselines Outperform Sparse Autoencoders | Zhengxuan Wu, Aryaman Arora, Atticus Geiger
+2308.10248 2023 Steering Language Models With Activation Engineering | Alexander Matt Turner, Lisa Thiergart, Gavin Leech
+2310.05130 2023 Fast-DetectGPT: Efficient Zero-Shot Detection of Machine-Generated Text via Conditional Probability Curvature | Guangsheng Bao, Yanbin Zhao, Zhiyang Teng
+2401.12070 2024 Spotting LLMs With Binoculars: Zero-Shot Detection of Machine-Generated Text | Abhimanyu Hans, Avi Schwarzschild, Valeriia Cherepanova
+2503.08716 2025 AuthorMist: Evading AI Text Detectors with Reinforcement Learning | Isaac David, Arthur Gervais
+2507.21509 2025 Persona Vectors: Monitoring and Controlling Character Traits in Language Models | Runjin Chen, Andy Arditi, Henry Sleight
+2301.11305 2023 DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature | Eric Mitchell, Yoonho Lee, Alexander Khazatsky
+2505.24523 2025 Stress-testing Machine Generated Text Detection: Shifting Language Models Writing Style to Fool Detectors | Andrea Pedrotti, Michele Papucci, Cristiano Ciaccio
+2607.01802 2026 On the Limits of Steering Vectors for Preference-Aligned Generation | Melanie Subbiah, Zara Hall, Kathleen McKeown
+2406.11717 2024 Refusal in Language Models Is Mediated by a Single Direction | Andy Arditi, Oscar Obeso, Aaquib Syed
+2601.10387 2026 The Assistant Axis: Situating and Stabilizing the Default Persona of Language Models | Christina Lu, Jack Gallagher, Jonathan Michala
+2606.12234 2026 On The Effectiveness-Fluency Trade-Off In LLM Conditioning: A Systematic Study | Iuri Macocco, Pau Rodríguez, Arno Blaas
+2306.04723 2023 Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts | Eduard Tulchinskii, Kristian Kuznetsov, Laida Kushnareva
+2405.07940 2024 RAID: A Shared Benchmark for Robust Evaluation of Machine-Generated Text Detectors | Liam Dugan, Alyssa Hwang, Filip Trhlik
+2606.07313 2026 SV-Detect: AI-generated Text Detection with Steering Vectors | Mikhail Vishnyakov, Tatiana Gaintseva
+29 set()

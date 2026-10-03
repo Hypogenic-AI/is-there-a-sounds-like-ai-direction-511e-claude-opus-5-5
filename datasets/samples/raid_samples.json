@@ -1,0 +1,54 @@
+[
+ {
+  "id":"c093400c-2bd2-4e0d-a732-f99d499d58a9",
+  "adv_source_id":"c093400c-2bd2-4e0d-a732-f99d499d58a9",
+  "source_id":"c093400c-2bd2-4e0d-a732-f99d499d58a9",
+  "model":"human",
+  "decoding":null,
+  "repetition_penalty":null,
+  "attack":"none",
+  "domain":"abstracts",
+  "title":"ComBiNet: Compact Convolutional Bayesian Neural Network for Image Segmentation",
+  "prompt":null,
+  "generation":"Fully convolutional U-shaped neural networks have largely been the dominant\napproach for pixel-wise image segmentation. In this work, we tackle two defects\nthat hinder their deployment in real-world applications: 1) Predictions lack\nuncertainty quantification that may be crucial to many decision-making systems;\n2) Large memory storage and computational consumption demanding extensive\nhardware resources. To address these issues and improve their practicality we\ndemonstrate a few-parameter compact Bayesian convolutional architecture, that\nachieves a marginal improvement in accuracy in comparison"
+ },
+ {
+  "id":"c093400c-2bd2-4e0d-a732-f99d499d58a9",
+  "adv_source_id":"c093400c-2bd2-4e0d-a732-f99d499d58a9",
+  "source_id":"c093400c-2bd2-4e0d-a732-f99d499d58a9",
+  "model":"human",
+  "decoding":null,
+  "repetition_penalty":null,
+  "attack":"none",
+  "domain":"abstracts",
+  "title":"ComBiNet: Compact Convolutional Bayesian Neural Network for Image Segmentation",
+  "prompt":null,
+  "generation":"Fully convolutional U-shaped neural networks have largely been the dominant\napproach for pixel-wise image segmentation. In this work, we tackle two defects\nthat hinder their deployment in real-world applications: 1) Predictions lack\nuncertainty quantification that may be crucial to many decision-making systems;\n2) Large memory storage and computational consumption demanding extensive\nhardware resources. To address these issues and improve their practicality we\ndemonstrate a few-parameter compact Bayesian convolutional architecture, that\nachieves a marginal improvement in accuracy in comparison"
+ },
+ {
+  "id":"0d21b0c6-f47e-4155-b9a8-64a9485eeb26",
+  "adv_source_id":"0d21b0c6-f47e-4155-b9a8-64a9485eeb26",
+  "source_id":"c093400c-2bd2-4e0d-a732-f99d499d58a9",
+  "model":"llama-chat",
+  "decoding":"greedy",
+  "repetition_penalty":"no",
+  "attack":"none",
+  "domain":"abstracts",
+  "title":"ComBiNet: Compact Convolutional Bayesian Neural Network for Image Segmentation",
+  "prompt":"Write the abstract for the academic paper titled \"ComBiNet: Compact Convolutional Bayesian Neural Network for Image Segmentation\".",
+  "generation":"In this paper, we propose a novel approach to image segmentation called ComBiNet, which stands for Compact Convolutional Bayesian Neural Network. ComBiNet combines the strengths of convolutional neural networks (CNNs) and Bayesian neural networks (BNNs) to provide a compact and accurate solution for image segmentation tasks.\n\nThe proposed ComBiNet model consists of a compact CNN architecture that leverages the power of depthwise separable convolutions and channel shuffle operations to reduce the number of parameters and computation required. The CNN is followed by a Bayesian layer that incorpo"
+ },
+ {
+  "id":"28e63698-88f3-4f78-b618-46a38abf3cbe",
+  "adv_source_id":"28e63698-88f3-4f78-b618-46a38abf3cbe",
+  "source_id":"c093400c-2bd2-4e0d-a732-f99d499d58a9",
+  "model":"llama-chat",
+  "decoding":"sampling",
+  "repetition_penalty":"yes",
+  "attack":"none",
+  "domain":"abstracts",
+  "title":"ComBiNet: Compact Convolutional Bayesian Neural Network for Image Segmentation",
+  "prompt":"Write the abstract for the academic paper titled \"ComBiNet: Compact Convolutional Bayesian Neural Network for Image Segmentation\".",
+  "generation":"In this paper, we propose ComBiNet, a compact convolutional Bayesian neural network designed specifically for image segmentation tasks. ComBiNet combines the strengths of convolutional neural networks (CNNs) and Bayesian neural networks (BNNs), allowing for efficient and accurate segmentation while minimizing memory requirements. Our novel approach leverages a compact architecture that significantly reduces the number of parameters and computations required for training and inference, making it particularly suitable for resource-constrained devices.\n\nWe evaluated ComBiNet on several benchmark "
+ }
+]

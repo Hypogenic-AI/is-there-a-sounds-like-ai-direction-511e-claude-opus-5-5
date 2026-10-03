@@ -1,0 +1,74 @@
+
+###  abs:"machine-generated text" AND abs:"linear probe"
+2608.24780v1 | 2026 | Linear Probing Provides Robust and Efficient Detection of Machine-Generated Text
+
+###  abs:"AI-generated text" AND abs:"steering"
+2606.07313v2 | 2026 | SV-Detect: AI-generated Text Detection with Steering Vectors
+2309.03164v1 | 2023 | J-Guard: Journalism Guided Adversarially Robust Detection of AI-generated News
+2505.15261v1 | 2025 | AGENT-X: Adaptive Guideline-based Expert Network for Threshold-free AI-generated teXt detection
+2602.06692v1 | 2026 | Evaluating Prompt Engineering Strategies for Sentiment Control in AI-Generated Texts
+
+###  abs:"machine-generated text" AND abs:"hidden states" AND abs:detection
+2605.12890v2 | 2026 | Steer-to-Detect: Probing Hidden Representations for Detection of LLM-Generated Texts
+2608.28009v1 | 2026 | Beyond Global Scalars: Synergizing Token-Level Statistics and Deep Semantics for Adversarial AIGC Text Detection
+
+###  abs:"AI-generated text" AND abs:"representation" AND abs:"residual stream"
+
+###  ti:"assistant axis"
+2601.10387v1 | 2026 | The Assistant Axis: Situating and Stabilizing the Default Persona of Language Models
+
+###  abs:"persona vectors"
+2507.21509v3 | 2025 | Persona Vectors: Monitoring and Controlling Character Traits in Language Models
+2605.13329v1 | 2026 | Tracing Persona Vectors Through LLM Pretraining
+2510.10157v2 | 2025 | BILLY: Steering Large Language Models via Merging Persona Vectors for Creative Generation
+2603.21398v1 | 2026 | Persona Vectors in Games: Measuring and Steering Strategies via Activation Vectors
+2607.13162v3 | 2026 | What Models Express, Suppress, and Resist: Auditing Open-Weight LLMs with Persona Vectors
+2605.09159v2 | 2026 | Do LLMs Experience an Internal Polylogue? Investigating Reasoning through the Lens of Personas
+2601.09833v1 | 2026 | Stable and Explainable Personality Trait Evaluation in Large Language Models with Internal Activations
+2604.17031v3 | 2026 | Where is the Mind? Persona Vectors and LLM Individuation
+2605.31328v2 | 2026 | Reinforcement Learning Can Amplify Emergent Misalignment from Harmless Rewards
+2607.00006v1 | 2026 | Persona Without Substrate: Regime-Dependence and the LLM Individuation Problem
+2609.36388v1 | 2026 | Persona Dosing: Calibrated Activation Steering for Graded Trait Control
+2605.21006v4 | 2026 | Playing Devil's Advocate: Off-the-Shelf Persona Vectors Rival Targeted Steering for Sycophancy
+
+###  abs:"steering vectors" AND abs:"style"
+2607.01802v1 | 2026 | On the Limits of Steering Vectors for Preference-Aligned Generation
+2512.18930v1 | 2025 | LouvreSAE: Sparse Autoencoders for Interpretable and Controllable Style Transfer
+2503.09630v5 | 2025 | CASteer: Cross-Attention Steering for Controllable Concept Erasure
+2501.14371v1 | 2025 | DRESSing Up LLM: Efficient Stylized Question-Answering via Style Subspace Editing
+2508.04530v2 | 2025 | Balancing Stylization and Truth via Disentangled Representation Steering
+2511.20233v5 | 2025 | REFLEX: Self-Refining Explainable Fact-Checking via Verdict-Anchored Style Control
+2603.23629v2 | 2026 | Steering Code LLMs with Activation Directions for Language and Library Control
+2604.09213v1 | 2026 | SHIFT: Steering Hidden Intermediates in Flow Transformers
+2610.01062v1 | 2026 | Kernelized Activation Steering
+2608.29215v2 | 2026 | Attribute-Based Activation Steering of LLMs for Group-Specific Explanation Generation
+2602.07639v2 | 2026 | Letting Tutor Personas Speak Up for LLMs: Learning Steering Vectors from Dialogue via Preference Optimization
+2608.20393v1 | 2026 | Knowledge-Graph-Gated Defactualization for Style-Controllable and Fact-Preserving Generation in Agentic Conversational AI
+
+###  abs:"humanize" AND abs:"AI-generated text" AND abs:detector
+2606.31074v1 | 2026 | Triospect: A Three-Dimensional Framework for Robust Statistical AI-Generated Text Detection Against Diverse Attacks
+2307.02599v2 | 2023 | Evade ChatGPT Detectors via A Single Space
+2308.01284v2 | 2023 | Fighting Fire with Fire: Can ChatGPT Detect AI-generated Text?
+2606.04906v1 | 2026 | 'Your AI Text is not Mine': Redefining and Evaluating AI-generated Text Detection under Realistic Assumptions
+2606.00016v1 | 2026 | AEyeDE: An Attention-Based Attribution Framework for AI-Generated Text Detection
+2406.01179v2 | 2024 | Are AI-Generated Text Detectors Robust to Adversarial Perturbations?
+2608.29919v1 | 2026 | IndicDetect: Evaluating Cross-Lingual LLM-Generated Text Detection for Hindi, Telugu, and Tamil
+2501.15654v2 | 2025 | People who frequently use ChatGPT for writing tasks are accurate and robust detectors of AI-generated text
+2609.22221v1 | 2026 | Team DArgk at the 2026 ELOQUENT lab for evaluating generative language model quality: Residuals of Humanity: AI Detection Evasion via GRPO Fine-Tuning
+2606.07313v2 | 2026 | SV-Detect: AI-generated Text Detection with Steering Vectors (dup)
+2310.15264v1 | 2023 | Towards Possibilities & Impossibilities of AI-generated Text Detection: A Survey
+2503.08716v1 | 2025 | AuthorMist: Evading AI Text Detectors with Reinforcement Learning
+
+###  abs:"evade" AND abs:"AI text detector" AND abs:"activation"
+
+###  abs:"linear representation" AND abs:"writing style" AND abs:"language model"
+
+###  abs:"stylistic" AND abs:"LLM-generated" AND abs:"interpretab"
+
+###  ti:"idiosyncrasies" AND abs:"large language models"
+2502.12150v2 | 2025 | Idiosyncrasies in Large Language Models
+2604.16755v2 | 2026 | Machine individuality: Separating genuine idiosyncrasy from response bias in large language models
+
+###  abs:"steering" AND abs:"evaluation" AND abs:"fluency" AND abs:"concept"
+2109.03892v3 | 2021 | Retrieve, Caption, Generate: Visual Grounding for Enhancing Commonsense in Text Generation Models
+2606.12234v2 | 2026 | On The Effectiveness-Fluency Trade-Off In LLM Conditioning: A Systematic Study

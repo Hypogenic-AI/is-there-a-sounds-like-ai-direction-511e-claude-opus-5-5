@@ -1,0 +1,63 @@
+
+###  abs:"activation steering" AND abs:"detector" AND abs:"generated text"
+
+###  abs:"steering" AND abs:"human-like" AND abs:"writing" AND abs:"language model"
+2411.07122v2 | 2024 | SCAR: Sparse Conditioned Autoencoders for Concept Detection and Steering in LLMs
+2503.03601v1 | 2025 | Feature-Level Insights into Artificial Text Detection with Sparse Autoencoders
+2510.19687v2 | 2025 | Are Large Language Models Sensitive to the Motives Behind Communication?
+
+###  abs:"machine-generated" AND abs:"sparse autoencoder"
+
+###  abs:"AI-generated text" AND abs:"latent direction"
+
+###  abs:"human-written" AND abs:"LLM" AND abs:"activations" AND abs:"linearly separable"
+
+###  abs:"representation engineering" AND abs:"top-down"
+2310.01405v4 | 2023 | Representation Engineering: A Top-Down Approach to AI Transparency
+2410.06225v1 | 2024 | A Timeline and Analysis for Representation Plasticity in Large Language Models
+
+###  abs:"contrastive activation addition"
+2603.21398v1 | 2026 | Persona Vectors in Games: Measuring and Steering Strategies via Activation Vectors
+2508.19316v1 | 2025 | Sycophancy as compositions of Atomic Psychometric Traits
+2412.10427v2 | 2024 | Identifying and Manipulating Personality Traits in LLMs Through Activation Engineering
+2511.15895v1 | 2025 | Decomposing Theory of Mind: How Emotional Processing Mediates ToM Abilities in LLMs
+2608.25569v1 | 2026 | Controllable Affective Generation via Latent Vector Steering
+2603.25052v2 | 2026 | Closing the Confidence-Faithfulness Gap in Large Language Models
+2404.05971v1 | 2024 | Does Transformer Interpretability Transfer to RNNs?
+2507.11771v1 | 2025 | Scaling laws for activation steering with Llama 2 models and refusal mechanisms
+
+###  abs:"slop" AND abs:"language model"
+2607.05410v1 | 2026 | CANONIC: Governance Is Compilation
+2608.25667v1 | 2026 | AI Slop and Hallucinations in Vulnerability Assessment: A Survey on Reasoning Failures and Trustworthy Mitigation
+2604.23822v2 | 2026 | KISS Sorcar: A Stupidly-Simple General-Purpose and Software Engineering AI Assistant
+2609.33915v1 | 2026 | Training Witnesses: Trusting the Training without Trusting the Trainer
+2606.17791v1 | 2026 | The Slop Paradox: How Synthetic Standardization Erodes Clinical Uncertainty and Cross-Modal Alignment in AI-Rewritten Radiology Reports
+
+###  abs:"formality" AND abs:"steering vector"
+2604.02113v1 | 2026 | Reliable Control-Point Selection for Steering Reasoning in Large Language Models
+2502.02716v2 | 2025 | A Unified Understanding and Evaluation of Steering Methods
+2606.28770v2 | 2026 | Mechanistic Personality Analysis of LLMs: Steering Personality via Latent Feature Interventions
+2311.03658v2 | 2023 | The Linear Representation Hypothesis and the Geometry of Large Language Models
+2502.16385v1 | 2025 | Toward a Flexible Framework for Linear Representation Hypothesis Using Maximum Likelihood Estimation
+2507.04742v2 | 2025 | Activation Steering for Chain-of-Thought Compression
+
+###  abs:"refusal" AND abs:"single direction"
+2602.02132v2 | 2026 | There Is More to Refusal in Large Language Models than a Single Direction
+2511.08379v2 | 2025 | SOM Directions are Better than One: Multi-Directional Refusal Suppression in Language Models
+2505.17306v2 | 2025 | Refusal Direction is Universal Across Safety-Aligned Languages
+2605.26772v1 | 2026 | Beyond a Single Direction: Chain-of-Thought Disrupts Simple Steering of Refusal
+2406.11717v3 | 2024 | Refusal in Language Models Is Mediated by a Single Direction
+2608.28233v1 | 2026 | REINS: Refusal-Enhanced Inhibitory Steering with Sparse Autoencoder Features
+2504.18872v1 | 2025 | Latent Adversarial Training Improves the Representation of Refusal
+2607.14147v1 | 2026 | Breaking Refusal in the First Half: A Mechanistic Study of the Prefill Jailbreak
+
+###  abs:"AI-generated text detection" AND abs:"zero-shot" AND abs:"cross-perplexity"
+
+###  abs:"machine-generated text" AND abs:"benchmark" AND abs:"robust" AND abs:"adversarial" AND abs:"domains"
+2405.07940v2 | 2024 | RAID: A Shared Benchmark for Robust Evaluation of Machine-Generated Text Detectors
+2603.17522v1 | 2026 | Detecting the Machine: A Comprehensive Benchmark of AI-Generated Text Detectors Across Architectures, Domains, and Adversarial Conditions
+2509.26051v1 | 2025 | CEAID: Benchmark of Multilingual Machine-Generated Text Detection Methods for Central European Languages
+2507.23577v2 | 2025 | T-Detect: Tail-Aware Statistical Normalization for Robust Detection of Adversarial Machine-Generated Text
+2505.24523v1 | 2025 | Stress-testing Machine Generated Text Detection: Shifting Language Models Writing Style to Fool Detectors
+
+###  abs:"grammatical and rhetorical styles" AND abs:"LLM"

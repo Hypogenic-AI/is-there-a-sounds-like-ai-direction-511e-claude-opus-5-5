@@ -1,0 +1,32 @@
+[
+ {
+  "text":"All confidence requires is a firm belief in your own self-worth. If you believe it, that girl you like? She's going to believe it, too. I really wish I could upvote this more than once...",
+  "label":0,
+  "src":"hswag_machine_continuation_opt_iml_30b"
+ },
+ {
+  "text":"Samsung will announce its latest lineup of Galaxy flagship phones on January 14th. It is expected to announce three new smartphones at the event: the Galaxy S21, S21 Plus, and S21 Ultra. Samsung may also announce a new Tile competitor and a new set of Galaxy Buds Pro wireless earbuds. The event teaser video is available in the article.",
+  "label":1,
+  "src":"tldr_human"
+ },
+ {
+  "text":"The Keep Military Museum in Dorchester plans to use the money to convert a bunker into an interactive experience. It also wants to create an online gallery of Dorset and Dorset County Council's material heritage, including artefacts from the county's royal history",
+  "label":0,
+  "src":"xsum_machine_continuation_opt_iml_max_1.3b"
+ },
+ {
+  "text":"I was once a simple alarm clock, sitting innocently on a bedside table. I was content to wake up my owner every morning at 7am sharp. I liked to think that I was a good alarm clock, one of the best in fact. I was always on time, never late. My owner never had any complaints about me. But then one day, everything changed. My owner didn't wake up when I went off at 7am. I kept ringing and ringing but there was no response. I grew worried and started to shake uncontrollably. What was going on? Suddenly, the door to the bedroom flew open and a stranger entered. I was terrified. The stranger approa",
+  "label":0,
+  "src":"wp_machine_specified_text-davinci-002"
+ },
+ {
+  "text":"We study the problem of recognizing visual entities from the textual descriptions of their classes. Specifically, given birds' images with free-text descriptions of their species, we learn to classify images as either Pied Woodpecker (PWP) or Red-tailed Hawk (RH). We apply a Bayesian Bayes approach to classifying the classifications made by humans and a cluster analysis algorithm in order to explore differences between their approaches.",
+  "label":0,
+  "src":"sci_gen_machine_continuation_opt_1.3b"
+ },
+ {
+  "text":"Rinse as usual, and avoid brushing it out after that. [title] Towel-dry gently using the \" twist and press \" technique.",
+  "label":1,
+  "src":"hswag_human"
+ }
+]
